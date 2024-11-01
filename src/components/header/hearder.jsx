@@ -1,9 +1,19 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { userLogout } from '../../reducers/authSlice'; // Assure-toi que cette action est bien exportée de ton authSlice
 import ImageBank from "../../assets/argentBankLogo.png";
 
 function Header() {
-  const location = useLocation(); // Obtenir la route actuelle
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userName = useSelector((state) => state.auth.userData.userName);
+
+  const handleSignOut = () => {
+    dispatch(userLogout()); // Déconnecte l'utilisateur et supprime le token
+    navigate('/signin'); // Redirige vers la page de connexion
+  };
 
   return (
     <nav className="main-nav">
@@ -16,16 +26,16 @@ function Header() {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
       <div>
-        {location.pathname === '/user' ? (  // pour la route user
+        {location.pathname === '/user' ? ( 
           <>
             <Link className="main-nav-item" to="/user">
               <i className="fa fa-user-circle"></i>
-              Tony
+              {userName ? userName : "Utilisateur"}
             </Link>
-            <Link className="main-nav-item" to="/">
+            <button className="main-nav-item" onClick={handleSignOut} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}>
               <i className="fa fa-sign-out"></i>
               Sign Out
-            </Link>
+            </button>
           </>
         ) : (
           <Link className="main-nav-item" to="/signin">

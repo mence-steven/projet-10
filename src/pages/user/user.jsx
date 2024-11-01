@@ -1,51 +1,89 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import ImageBank from "../../assets/argentBankLogo.png";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { editNameOnServer } from '../../reducers/userActions'; // Assurez-vous que le chemin est correct
 import './user.scss';
 
-const UserAccount = () => {
-  return (
-    <>
+const UserPage = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [newUserName, setnewUserName] = useState('');
+  
+  const firstName = useSelector((state) => state.auth.userData.firstName);
+const userName = useSelector((state) => state.auth.userData.userName);
+const lastName = useSelector((state) => state.auth.userData.lastName);
+console.log("Valeurs extraites de Redux dans UserPage :", firstName, lastName, userName);
 
-      <main className="main bg-dark">
-        <div className="header">
-          <h1>Welcome back<br />Tony Jarvis!</h1>
-          <button className="edit-button">Edit Name</button>
-        </div>
-        <h2 className="sr-only">Accounts</h2>
-        <section className="account">
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-            <p className="account-amount">$2,082.79</p>
-            <p className="account-amount-description">Available Balance</p>
+  const token = useSelector((state) => state.auth.token);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isEditing) {
+      setnewUserName(firstName);
+    }
+  }, [isEditing, firstName]);
+
+  const handleSaveClick = async () => {
+    console.log("Appel de handleSaveClick avec le prénom :", newUserName);
+    try {
+      await dispatch(editNameOnServer({ userName: newUserName }, token));
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Erreur lors de l'enregistrement :", error);
+    }
+  };
+  
+
+  return (
+    <main className="main bg-dark">
+      <div className="header">
+        {isEditing ? (
+          <div>
+            <input
+              type="text"
+              //value={newUserName}
+              onChange={(e) => setnewUserName(e.target.value)}
+              placeholder="User Name"
+              className="edit-input"
+            />{/*
+            <input
+              type="text"
+              value={newLastName}
+              onChange={(e) => setNewLastName(e.target.value)}
+              placeholder="Last Name"
+              className="edit-input"
+            />*/}
+            <button onClick={handleSaveClick} className="save-button">Save</button>
+            <button onClick={() => setIsEditing(false)} className="cancel-button">Cancel</button>
           </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
+        ) : (
+          <div>
+            <h1>Welcome back<br />{firstName} {lastName}!</h1>
+            <button onClick={() => setIsEditing(true)} className="edit-button">Edit Name</button>
           </div>
-        </section>
-        <section className="account">
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-            <p className="account-amount">$10,928.42</p>
-            <p className="account-amount-description">Available Balance</p>
-          </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </section>
-        <section className="account">
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-            <p className="account-amount">$184.30</p>
-            <p className="account-amount-description">Current Balance</p>
-          </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </section>
-      </main>
-    </>
+        )}
+      </div>
+
+      <h2 className="sr-only">Accounts</h2>
+      
+      {/* Sections des comptes */}
+      {['Checking (x8349)', 'Savings (x6712)', 'Credit Card (x8349)'].map((account, index) => {
+        const amounts = ['$2,082.79', '$10,928.42', '$184.30'];
+        const descriptions = ['Available Balance', 'Available Balance', 'Current Balance'];
+        return (
+          <section key={index} className="account">
+            <div className="account-content-wrapper">
+              <h3 className="account-title">Argent Bank {account}</h3>
+              <p className="account-amount">{amounts[index]}</p>
+              <p className="account-amount-description">{descriptions[index]}</p>
+            </div>
+            <div className="account-content-wrapper cta">
+              <button className="transaction-button">View transactions</button>
+            </div>
+          </section>
+        );
+      })}
+    </main>
   );
 };
 
-export default UserAccount;
+export default UserPage;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ImageBank from "../../assets/argentBankLogo.png";
 import ImageChat from "../../assets/icon-chat.png";
 import ImageMoney from "../../assets/icon-money.png";
 import ImageSecurity from "../../assets/icon-security.png";
