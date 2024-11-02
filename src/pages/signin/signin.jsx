@@ -5,29 +5,25 @@ import { fetchToken, fetchDataUser, setError } from '../../reducers/authSlice';
 import './signin.css';
 
 const SignIn = () => {
-  const [username, setUsername] = useState(''); // Déclare et initialise username
-  const [password, setPassword] = useState(''); // Déclare et initialise password
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(setError(null)); // Réinitialise les erreurs avant une nouvelle tentative
+    dispatch(setError(null));
   
     const postData = { email: username, password };
-    console.log("Données envoyées:", postData);
   
     try {
       const actionResult = await dispatch(fetchToken(postData));
       
-      if (actionResult.payload) { // Vérifie que le token a bien été récupéré
-        console.log("Token obtenu dans handleSubmit:", actionResult.payload);
+      if (actionResult.payload) {
   
-        // Appel fetchDataUser pour récupérer les informations utilisateur
         await dispatch(fetchDataUser(actionResult.payload));
   
-        navigate('/user'); // Redirige vers la page utilisateur si succès
-        console.log("Redirection vers /user réussie");
+        navigate('/user');
       } else {
         console.error("Aucun token reçu");
       }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { userLogout } from '../../reducers/authSlice'; // Assure-toi que cette action est bien exportée de ton authSlice
+import { userLogout } from '../../reducers/authSlice';
 import ImageBank from "../../assets/argentBankLogo.png";
 import './header.css';
 
@@ -12,8 +12,8 @@ function Header() {
   const userName = useSelector((state) => state.auth.userData.userName);
 
   const handleSignOut = () => {
-    dispatch(userLogout()); // Déconnecte l'utilisateur et supprime le token
-    navigate('/signin'); // Redirige vers la page de connexion
+    dispatch(userLogout());
+    navigate('/signin');
   };
 
   return (

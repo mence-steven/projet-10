@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editNameOnServer } from '../../reducers/userActions'; // Assurez-vous que le chemin est correct
+import { editNameOnServer } from '../../reducers/userActions';
 import './user.css';
 
 const UserPage = () => {
@@ -10,7 +10,6 @@ const UserPage = () => {
   const firstName = useSelector((state) => state.auth.userData.firstName);
 const userName = useSelector((state) => state.auth.userData.userName);
 const lastName = useSelector((state) => state.auth.userData.lastName);
-console.log("Valeurs extraites de Redux dans UserPage :", firstName, lastName, userName);
 
   const token = useSelector((state) => state.auth.token);
 
@@ -23,7 +22,6 @@ console.log("Valeurs extraites de Redux dans UserPage :", firstName, lastName, u
   }, [isEditing, firstName]);
 
   const handleSaveClick = async () => {
-    console.log("Appel de handleSaveClick avec le prénom :", newUserName);
     try {
       await dispatch(editNameOnServer({ userName: newUserName }, token));
       setIsEditing(false);
@@ -40,18 +38,10 @@ console.log("Valeurs extraites de Redux dans UserPage :", firstName, lastName, u
           <div className='edit-name'>
             <input
               type="text"
-              //value={newUserName}
               onChange={(e) => setnewUserName(e.target.value)}
               placeholder="User Name"
               className="edit-input"
-            />{/*
-            <input
-              type="text"
-              value={newLastName}
-              onChange={(e) => setNewLastName(e.target.value)}
-              placeholder="Last Name"
-              className="edit-input"
-            />*/}
+            />
             <button onClick={handleSaveClick} className="save-button">Save</button>
             <button onClick={() => setIsEditing(false)} className="cancel-button">Cancel</button>
           </div>

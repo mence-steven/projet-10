@@ -1,4 +1,3 @@
-
 import { editName, setError } from './authSlice';
 
 export const editNameOnServer = (data, token) => async (dispatch) => {
@@ -13,7 +12,6 @@ export const editNameOnServer = (data, token) => async (dispatch) => {
     });
 
     const result = await response.json();
-    console.log(result);
 
     if (response.ok) {
       dispatch(editName({
