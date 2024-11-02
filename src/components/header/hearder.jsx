@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { userLogout } from '../../reducers/authSlice'; // Assure-toi que cette action est bien exportée de ton authSlice
 import ImageBank from "../../assets/argentBankLogo.png";
+import './header.css';
 
 function Header() {
   const location = useLocation();

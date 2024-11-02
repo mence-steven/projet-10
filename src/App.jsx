@@ -7,7 +7,8 @@ import Home from "./pages/home/home";
 import SignIn from './pages/signin/signin';
 import UserPage from './pages/user/user';
 import PrivateRoute from './components/privateroute/PrivateRoute';
-import { fetchDataUser } from './reducers/authSlice'; // Chemin à ajuster si nécessaire
+import { fetchDataUser } from './reducers/authSlice';
+import './App.css';
 
 const App = () => {
   const dispatch = useDispatch();

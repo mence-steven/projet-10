@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editNameOnServer } from '../../reducers/userActions'; // Assurez-vous que le chemin est correct
-import './user.scss';
+import './user.css';
 
 const UserPage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -37,7 +37,7 @@ console.log("Valeurs extraites de Redux dans UserPage :", firstName, lastName, u
     <main className="main bg-dark">
       <div className="header">
         {isEditing ? (
-          <div>
+          <div className='edit-name'>
             <input
               type="text"
               //value={newUserName}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchToken, fetchDataUser, setError } from '../../reducers/authSlice';
-import './signin.scss';
+import './signin.css';
 
 const SignIn = () => {
   const [username, setUsername] = useState(''); // Déclare et initialise username

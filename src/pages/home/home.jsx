@@ -4,7 +4,7 @@ import ImageChat from "../../assets/icon-chat.png";
 import ImageMoney from "../../assets/icon-money.png";
 import ImageSecurity from "../../assets/icon-security.png";
 import ImageTree from "../../assets/bank-tree.jpeg";
-import './home.scss';
+import './home.css';
 
 function Home() {
   return (
