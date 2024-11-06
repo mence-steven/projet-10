@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editNameOnServer } from '../../reducers/userActions';
+import AccountList from '../../components/accountList/accountList';
 import './user.css';
 
 const UserPage = () => {
@@ -56,22 +57,7 @@ const lastName = useSelector((state) => state.auth.userData.lastName);
       <h2 className="sr-only">Accounts</h2>
       
       {/* Sections des comptes */}
-      {['Checking (x8349)', 'Savings (x6712)', 'Credit Card (x8349)'].map((account, index) => {
-        const amounts = ['$2,082.79', '$10,928.42', '$184.30'];
-        const descriptions = ['Available Balance', 'Available Balance', 'Current Balance'];
-        return (
-          <section key={index} className="account">
-            <div className="account-content-wrapper">
-              <h3 className="account-title">Argent Bank {account}</h3>
-              <p className="account-amount">{amounts[index]}</p>
-              <p className="account-amount-description">{descriptions[index]}</p>
-            </div>
-            <div className="account-content-wrapper cta">
-              <button className="transaction-button">View transactions</button>
-            </div>
-          </section>
-        );
-      })}
+      <AccountList />
     </main>
   );
 };

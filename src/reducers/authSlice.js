@@ -66,6 +66,7 @@ export const fetchToken = (postData) => async (dispatch) => {
       localStorage.setItem('token', data.body.token);
       return { payload: data.body.token };
     } else {
+      alert("The login credentials are not correct. We invite you to try again.");
       dispatch(setError(data.message));
       throw new Error(data.message);
     }
