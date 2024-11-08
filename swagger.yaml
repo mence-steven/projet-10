@@ -198,18 +198,18 @@ paths:
           type: integer
       responses:
         200:
-          description: User account transactions details retrieved succesfully,
+          description: User account transactions details retrieved successfully
           schema:
             "$ref": "#/definitions/Transaction_Details_Response"
         "400":
           description: Invalid Fields
         404:
-          description: user accounts, body properties is emply
+          description: user accounts, body properties is empty
         500:
           description: Internal Server Error
       security:
         - Bearer: []
-    post:
+    put:
       tags:
         - User Account Transactions Details
       summary: User Account Transaction Detail
@@ -404,3 +404,10 @@ definitions:
       notes:
         type: string
         description: Transaction detail notes
+      amount:
+        type: number
+        description: Transaction amount
+      transactionDate:
+        type: string
+        format: date-time
+        description: Transaction date in ISO format
